@@ -20,7 +20,7 @@ Invoke-WebRequest -Uri $SpotifyUri -OutFile $SpotifySetup;
 # Install Spotify silently and wait for completion
 Start-Process -FilePath $SpotifySetup -ArgumentList "/Silent" -NoNewWindow;
 
-# Run Spotify after installation ## Update this seems to block the script - maybe it doesnt exit?
+# Run Spotify after installation
 Start-Process -FilePath $SpotifyExe;
 
 # Download VS Code Installer
