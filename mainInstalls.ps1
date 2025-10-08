@@ -14,14 +14,14 @@ New-Item -Path $TempPath -ItemType Directory -Force | Out-Null;
 # Download Spotify Installer
 Invoke-WebRequest -Uri $SpotifyUri -OutFile $SpotifySetup;
 
+# Install Spotify silently and wait for completion
+Start-Process -FilePath $SpotifySetup -ArgumentList "/Silent" -Wait -NoNewWindow;
+
 # Download VS Code Installer
 Invoke-WebRequest -Uri $VSCodeUri -OutFile $VSCodeSetup;
 
 # Install Visual Studio Code silently and wait for completion
 Start-Process -FilePath $VSCodeSetup -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES" -Wait -NoNewWindow;
-
-# Install Spotify silently and wait for completion
-Start-Process -FilePath $SpotifySetup -ArgumentList "/Silent" -Wait -NoNewWindow;
 
 # Run Spotify after installation
 Start-Process -FilePath $SpotifyExe;
