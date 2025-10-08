@@ -8,6 +8,9 @@ $Username = "WDAGUtilityAccount" # Note: This user only exists inside WSB
 $SpotifyExe = "C:\Users\$Username\AppData\Roaming\Spotify\Spotify.exe"
 $VSCodeExe = "C:\Users\$Username\AppData\Local\Programs\Microsoft VS Code\Code.exe"
 
+# Disable the progressbar for Invoke-WebRequest - this dramatically speeds up the download
+$ProgressPreference = 'SilentlyContinue'
+
 # Create Temp directory if it doesn't exist (equivalent to making it safe to download)
 New-Item -Path $TempPath -ItemType Directory -Force | Out-Null;
 
