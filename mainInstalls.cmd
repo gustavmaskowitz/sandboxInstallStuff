@@ -1,17 +1,30 @@
-REM Download the Spotify installer to the temp folder in the Sandbox
-curl -L "https://download.spotify.com/SpotifySetup.exe" --output C:\temp\SpotifySetup.exe
+# Define variables for cleaner code
+$SpotifyUri = "https://download.spotify.com/SpotifySetup.exe"
+$VSCodeUri = "https://update.code.visualstudio.com/latest/win32-x64-user/stable"
+$TempPath = "C:\temp"
+$SpotifySetup = "$TempPath\SpotifySetup.exe"
+$VSCodeSetup = "$TempPath\vscode_installer.exe"
+$Username = "WDAGUtilityAccount" # Assuming this is the target user
+$SpotifyExe = "C:\Users\$Username\AppData\Roaming\Spotify\Spotify.exe"
+$VSCodeExe = "C:\Users\$Username\AppData\Local\Programs\Microsoft VS Code\Code.exe"
 
-REM Download Visual Studio Code User Installer to the temp folder in the Sandbox
-curl -L "https://update.code.visualstudio.com/latest/win32-x64-user/stable" --output C:\temp\vscode_installer.exe
+# Create Temp directory if it doesn't exist (equivalent to making it safe to download)
+New-Item -Path $TempPath -ItemType Directory -Force | Out-Null;
 
-REM Install Visual Studio Code silently and suppress message boxes
-C:\temp\vscode_installer.exe /verysilent /suppressmsgboxes
+# Download Spotify Installer
+Invoke-WebRequest -Uri $SpotifyUri -OutFile $SpotifySetup;
 
-REM Install Spotify silently
-C:\temp\SpotifySetup.exe /Silent
+# Download VS Code Installer
+Invoke-WebRequest -Uri $VSCodeUri -OutFile $VSCodeSetup;
 
-REM Spotify installs to the current user's AppData\Roaming directory (WDAGUtilityAccount)
-start "" "C:\Users\WDAGUtilityAccount\AppData\Roaming\Spotify\Spotify.exe"
+# Install Visual Studio Code silently and wait for completion
+Start-Process -FilePath $VSCodeSetup -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES" -Wait -NoNewWindow;
 
-REM Run Visual Studio Code after installation
-"C:\Users\WDAGUtilityAccount\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+# Install Spotify silently and wait for completion
+Start-Process -FilePath $SpotifySetup -ArgumentList "/Silent" -Wait -NoNewWindow;
+
+# Run Spotify after installation
+Start-Process -FilePath $SpotifyExe;
+
+# Run Visual Studio Code after installation
+Start-Process -FilePath $VSCodeExe
