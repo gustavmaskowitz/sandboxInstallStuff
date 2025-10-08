@@ -4,7 +4,7 @@ $VSCodeUri = "https://update.code.visualstudio.com/latest/win32-x64-user/stable"
 $TempPath = "C:\temp"
 $SpotifySetup = "$TempPath\SpotifySetup.exe"
 $VSCodeSetup = "$TempPath\vscode_installer.exe"
-$Username = "WDAGUtilityAccount" # Assuming this is the target user
+$Username = "WDAGUtilityAccount" # Note: This user only exists inside WSB
 $SpotifyExe = "C:\Users\$Username\AppData\Roaming\Spotify\Spotify.exe"
 $VSCodeExe = "C:\Users\$Username\AppData\Local\Programs\Microsoft VS Code\Code.exe"
 
